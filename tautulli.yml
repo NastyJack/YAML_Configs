@@ -1,0 +1,14 @@
+version: "2.1"
+services:
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Asia/Kolkata
+    volumes:
+      - /srv/dev-disk-by-uuid-76A241BEA2418419/NAS_1/Appdata/Tautulli:/config
+    ports:
+      - 2700:8181
+    restart: unless-stopped

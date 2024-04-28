@@ -1,0 +1,47 @@
+networks:
+  default:
+    name: arrs
+  	external: true
+
+services:
+  prowlarr: #indexer manager for Sonarr & Radarr
+    image: ghcr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - /srv/dev-disk-by-uuid-76A241BEA2418419/NAS_1/Appdata/Prowlarr:/config
+    ports:
+      - 2200:9696
+    restart: unless-stopped
+
+  radarr: #movie search agent
+    image: ghcr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - UMASK=022
+    volumes:
+      - /srv/dev-disk-by-uuid-76A241BEA2418419/NAS_1/Appdata/Radarr:/config
+      - /srv/dev-disk-by-uuid-76A241BEA2418419/NAS_1/data:/media
+    ports:
+      - 2300:7878
+    restart: unless-stopped
+  sonarr: #TV show search agent
+    image: ghcr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - UMASK=022
+    volumes:
+      - /srv/dev-disk-by-uuid-76A241BEA2418419/NAS_1/Appdata/Sonarr:/config
+      - /srv/dev-disk-by-uuid-76A241BEA2418419/NAS_1/data:/media
+    ports:
+      - 2400:8989  
+    restart: unless-stopped

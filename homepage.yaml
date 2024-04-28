@@ -1,0 +1,13 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    environment:
+      PUID: 1000
+      PGID: 1000
+    ports:
+      - 1999:3000
+    volumes:
+      - /srv/dev-disk-by-uuid-76A241BEA2418419/NAS_1/Appdata/Homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
